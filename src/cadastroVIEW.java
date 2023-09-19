@@ -1,3 +1,8 @@
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -135,21 +140,53 @@ public class cadastroVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastroNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroNomeActionPerformed
-        
-        
     }//GEN-LAST:event_cadastroNomeActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        ProdutosDTO produto = new ProdutosDTO();
-        String nome = cadastroNome.getText();
-        String valor = cadastroValor.getText();
-        String status = "A Venda";
-        produto.setNome(nome);
-        produto.setValor(Integer.parseInt(valor));
-        produto.setStatus(status);
-        
-        ProdutosDAO produtodao = new ProdutosDAO();
-        produtodao.cadastrarProduto(produto);
+    
+    Connection conn = null;
+    PreparedStatement prep = null;
+
+    try {
+        conn = new conectaDAO().connectDB();
+        String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
+        prep = conn.prepareStatement(sql);
+
+        // Obtenha os valores dos campos de texto
+        String nomeProduto = cadastroNome.getText();
+        int valorProduto = Integer.parseInt(cadastroValor.getText()); // Converte o texto em um inteiro
+        String statusProduto = "A Venda"; // Você pode definir o status como desejado
+
+        // Preencha os parâmetros da consulta
+        prep.setString(1, nomeProduto);
+        prep.setInt(2, valorProduto);
+        prep.setString(3, statusProduto);
+
+        int rowsAffected = prep.executeUpdate();
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
+            
+            // Limpe os campos de texto após o cadastro
+            cadastroNome.setText("");
+            cadastroValor.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Falha ao cadastrar o produto.");
+        }
+    } catch (SQLException erro) {
+        JOptionPane.showMessageDialog(null, "Erro ao cadastrar o produto: " + erro.getMessage());
+    } finally {
+        // Feche a conexão e os recursos
+        try {
+            if (prep != null) {
+                prep.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
         
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

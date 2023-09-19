@@ -27,7 +27,6 @@ public class ProdutosDAO {
         
         //conn = new conectaDAO().connectDB();
         
-        
     }
     
     public ArrayList<ProdutosDTO> listarProdutos() {

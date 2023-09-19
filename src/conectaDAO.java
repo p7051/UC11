@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
  */
 public class conectaDAO {
     
+    //CONECTA NO BANCO DE DADOS
+    
     public Connection connectDB(){
         Connection conn = null;
         

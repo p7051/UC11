@@ -144,6 +144,8 @@ public class cadastroVIEW extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
     
+      //CADASTRA OS DADOS  
+        
     Connection conn = null;
     PreparedStatement prep = null;
 
@@ -188,6 +190,8 @@ public class cadastroVIEW extends javax.swing.JFrame {
         }
     }
         
+    
+    
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed

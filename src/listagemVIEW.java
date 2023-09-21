@@ -152,6 +152,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     } else {
         JOptionPane.showMessageDialog(null, "Por favor, insira o ID do produto.");
     }
+    
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

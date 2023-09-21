@@ -13,7 +13,7 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
+import java.sql.SQLException;
 
 public class ProdutosDAO {
     
@@ -28,6 +28,7 @@ public class ProdutosDAO {
         //conn = new conectaDAO().connectDB();
         
     }
+    
     
     public ArrayList<ProdutosDTO> listarProdutos() {
         ArrayList<ProdutosDTO> produtos = new ArrayList<>();
@@ -71,7 +72,38 @@ public class ProdutosDAO {
         return produtos;
     }
     
-    
+    public void venderProduto(int produtoId) {
+    Connection conn = null;
+    PreparedStatement prep = null;
+
+    try {
+        conn = new conectaDAO().connectDB();
+        String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+        prep = conn.prepareStatement(sql);
+        prep.setInt(1, produtoId);
+
+        int rowsAffected = prep.executeUpdate();
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Produto vendido com sucesso.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Falha ao vender o produto.");
+        }
+    } catch (SQLException erro) {
+        JOptionPane.showMessageDialog(null, "Erro ao vender o produto: " + erro.getMessage());
+    } finally {
+        // Feche a conexão e os recursos
+        try {
+            if (prep != null) {
+                prep.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
     
         
 }
